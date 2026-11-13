@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Password Checker</title>
+    <style>
+        body {
+            font-family: Arial;
+            max-width: 400px;
+            margin: 60px auto;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        #tips {
+            margin-top: 10px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Password Strength Checker</h2>
+    <input type="text" id="pw" placeholder="Type a password" oninput="check()">
+    <div id="result"></div>
+    <ul id="tips"></ul>
+
+    <script>
+        const common = ["password", "123456", "qwerty", "admin", "letmein", "password123", "iloveyou"];
+
+        function check() {
+            const pw = document.getElementById("pw").value;
+            const result = document.getElementById("result");
+            const tipsList = document.getElementById("tips");
+            tipsList.innerHTML = "";
+
+            if (pw === "") { result.textContent = ""; return; }
+
+            if (common.includes(pw.toLowerCase())) {
+                result.textContent = "Very common password! Don't use this.";
+                result.style.color = "red";
+                return;
+            }
+
+            let score = 0;
+            const tips = [];
+
+            if (pw.length >= 8) score++; else tips.push("Use at least 8 characters");
+            if (/[A-Z]/.test(pw)) score++; else tips.push("Add an uppercase letter");
+            if (/[a-z]/.test(pw)) score++; else tips.push("Add a lowercase letter");
+            if (/[0-9]/.test(pw)) score++; else tips.push("Add a number");
+            if (/[^A-Za-z0-9]/.test(pw)) score++; else tips.push("Add a symbol like @ or #");
+
+            if (score <= 2) { result.textContent = "Weak password"; result.style.color = "red"; }
+            else if (score <= 4) { result.textContent = "Medium password"; result.style.color = "orange"; }
+            else { result.textContent = "Strong password"; result.style.color = "green"; }
+
+            tips.forEach(t => {
+                const li = document.createElement("li");
+                li.textContent = t;
+                tipsList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+
+</html>
