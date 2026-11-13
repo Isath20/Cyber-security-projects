@@ -1,7 +1,3 @@
-# Cyber-security-projects
-Beginner cyber security projects in Python and JavaScript
-
-
 # Cyber Security Projects
 
 Beginner-level cyber security projects built while learning Python and web basics.
